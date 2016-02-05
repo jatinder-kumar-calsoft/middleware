@@ -1685,7 +1685,7 @@ def run(d, args):
         '/socket': ServerConnection,
         '/shell': ShellConnection,
         '/file': FileConnection,
-        '/api': ApiHandler(d),
+        '/api/v2.0': ApiHandler(d),
         '/filedownload': DownloadRequestHandler(d)
     }, dispatcher=d), **kwargs)
 
@@ -1693,7 +1693,7 @@ def run(d, args):
         '/socket': ServerConnection,
         '/shell': ShellConnection,
         '/file': FileConnection,
-        '/api': ApiHandler(d),
+        '/api/v2.0': ApiHandler(d),
         '/filedownload': DownloadRequestHandler(d)
     }, dispatcher=d), **kwargs)
 
