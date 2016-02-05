@@ -74,7 +74,6 @@ from freenas.dispatcher.rpc import RpcContext, RpcException, ServerLockProxy
 from resources import ResourceGraph
 from services import ManagementService, DebugService, EventService, TaskService, PluginService, ShellService, LockService
 from schemas import register_general_purpose_schemas
-from api.handler import ApiHandler
 from balancer import Balancer
 from auth import PasswordAuthenticator, TokenStore, Token, TokenException, User, Service
 from freenas.utils import FaultTolerantLogHandler
@@ -1685,7 +1684,6 @@ def run(d, args):
         '/socket': ServerConnection,
         '/shell': ShellConnection,
         '/file': FileConnection,
-        '/api/v2.0': ApiHandler(d),
         '/filedownload': DownloadRequestHandler(d)
     }, dispatcher=d), **kwargs)
 
@@ -1693,7 +1691,6 @@ def run(d, args):
         '/socket': ServerConnection,
         '/shell': ShellConnection,
         '/file': FileConnection,
-        '/api/v2.0': ApiHandler(d),
         '/filedownload': DownloadRequestHandler(d)
     }, dispatcher=d), **kwargs)
 
