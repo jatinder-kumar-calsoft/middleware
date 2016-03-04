@@ -323,6 +323,9 @@ class SystemAdvancedConfigureTask(Task):
                 cs.set('system.serial.console', props['serial_console'])
                 loader = True
                 console = True
+                console_en_changed = True
+            else:
+                console_en_changed = False
 
             if 'serial_port' in props:
                 cs.set('system.serial.port', props['serial_port'])
@@ -367,6 +370,11 @@ class SystemAdvancedConfigureTask(Task):
                 self.dispatcher.call_sync('etcd.generation.generate_group', 'loader')
             if rc:
                 self.dispatcher.call_sync('etcd.generation.generate_group', 'services')
+            if console_en_changed:
+                try:
+                    system('grub-mkconfig', '-o', '/boot/grub/grub.cfg')
+                except SubprocessException:
+                    pass
         except DatastoreException as e:
             raise TaskException(errno.EBADMSG, 'Cannot configure system advanced: {0}'.format(str(e)))
         except RpcException as e:
