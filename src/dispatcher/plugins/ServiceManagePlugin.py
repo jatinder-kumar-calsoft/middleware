@@ -275,7 +275,11 @@ class ServiceManageTask(Task):
                 raise TaskException(errno.EBUSY, 'Hook {0} for {1} failed: {2}'.format(
                     action, name, e
                 ))
-
+        try:
+            service['rcng']['rc-scripts']
+        except KeyError:
+            raise TaskException(errno.ENOENT, '{0} service not configured'.format(name))
+        
         rc_scripts = service['rcng'].get('rc-scripts')
         reload_scripts = service['rcng'].get('reload', rc_scripts)
         try:
